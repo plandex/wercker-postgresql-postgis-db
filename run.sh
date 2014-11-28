@@ -19,6 +19,6 @@ if [ ! -n "$WERCKER_POSTGRESQL_HOST" ]; then
     export WERCKER_POSTGRESQL_HOST=$HOST
 fi
 
-sudo -u postgres createdb werkerdb$TEST_ENV_NUMBER -U postgres
-sudo -u postgres psql -c 'CREATE EXTENSION postgis;' -U postgres -d werckerdb$TEST_ENV_NUMBER
-sudo -u postgres psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d werckerdb$TEST_ENV_NUMBER
+sudo -- su postgres -c "createdb werkerdb$TEST_ENV_NUMBER -U postgres"
+sudo -- su postgres -c "psql -c 'CREATE EXTENSION postgis;' -U postgres -d werckerdb$TEST_ENV_NUMBER"
+sudo -- su postgres -c "psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d werckerdb$TEST_ENV_NUMBER"
