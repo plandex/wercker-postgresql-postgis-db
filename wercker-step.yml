@@ -1,0 +1,7 @@
+name: create-postgis-db
+version: 0.1.0
+description: postgresql postgis database creation step
+keywords:
+  - postgresql
+  - postgis
+  - create
