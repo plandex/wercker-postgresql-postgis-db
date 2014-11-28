@@ -1,0 +1,4 @@
+box: alexiss/ubuntu14-ruby-geo@0.1.0
+build:
+  steps:
+    - create-postgis-db
