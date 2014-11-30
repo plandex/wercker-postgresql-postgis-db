@@ -39,3 +39,19 @@ else
     sudo -- su "${user}" -c "PGPASSWORD=${password} psql -c 'CREATE EXTENSION postgis;' -d ${dbname}"
     sudo -- su "${user}" -c "PGPASSWORD=${password} psql -c 'CREATE EXTENSION postgis_topology;' -d ${dbname}"
 fi
+
+echo -n "Checking if database created... "
+if sudo -- su postgres -c "psql -c 'SELECT datname FROM pg_database WHERE datistemplate=false;'" | grep -Eqx "\s*${WERCKER_POSTGRESQL_DATABASE}"; then
+    echo "yes"
+else
+    echo "no"
+    exit 1
+fi
+
+echo -n "Checking if postgis extension created... "
+if sudo -- su postgres -c "psql -d ${WERCKER_POSTGRESQL_DATABASE} -c 'SELECT PostGIS_full_version();'" | grep -q "POSTGIS="; then
+    echo "yes"
+else
+    echo "no"
+    exit 1
+fi
