@@ -19,6 +19,7 @@ if [ ! -n "$WERCKER_POSTGRESQL_HOST" ]; then
     export WERCKER_POSTGRESQL_HOST=$HOST
 fi
 
-sudo -- su postgres -c "createdb werkerdb$TEST_ENV_NUMBER -U postgres"
-sudo -- su postgres -c "psql -c 'CREATE EXTENSION postgis;' -U postgres -d werckerdb$TEST_ENV_NUMBER"
-sudo -- su postgres -c "psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d werckerdb$TEST_ENV_NUMBER"
+echo "creating postgres database werkerdb$TEST_ENV_NUMBER with postgis extensions"
+sudo -- su postgres -c "PGPASSWORD=${WERCKER_POSTGRESQL_PASSWORD} createdb -h ${WERCKER_POSTGRESQL_HOST} -p ${WERCKER_POSTGRESQL_PORT} -U postgres -O postgres werkerdb$TEST_ENV_NUMBER"
+sudo -- su postgres -c "PGPASSWORD=${WERCKER_POSTGRESQL_PASSWORD} psql -c 'CREATE EXTENSION postgis;' -U postgres -d werckerdb$TEST_ENV_NUMBER -h ${WERCKER_POSTGRESQL_HOST} -p ${WERCKER_POSTGRESQL_PORT}"
+sudo -- su postgres -c "PGPASSWORD=${WERCKER_POSTGRESQL_PASSWORD} psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d werckerdb$TEST_ENV_NUMBER -h ${WERCKER_POSTGRESQL_HOST} -p ${WERCKER_POSTGRESQL_PORT}"
