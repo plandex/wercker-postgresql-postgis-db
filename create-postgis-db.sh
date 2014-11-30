@@ -4,6 +4,8 @@ dbname="${WERCKER_POSTGRESQL_DATABASE}${TEST_ENV_NUMBER}"
 user="${WERCKER_POSTGRESQL_USERNAME}"
 password="${WERCKER_POSTGRESQL_PASSWORD}"
 
+echo "Settings: ${dbname} ${user}"
+
 sudo -- su postgres -c "createdb -O ${user} ${dbname}"
 
 if [ -n "$WERCKER_POSTGRESQL_HOST" ]; then
